@@ -18,7 +18,7 @@
       <template v-slot:extension>
         <!-- tabs names -->
         <v-tabs v-model="model" color="transparent" centered  >
-          <v-tab v-for="i in 3" :key="i" :href="`#tab-${i}`">Item {{ i }}</v-tab>
+          <v-tab :key="0" href="#tab-discover">Discover</v-tab>
         </v-tabs>
         <!--  -->
       </template>
@@ -27,10 +27,8 @@
     <div class="tab-body">
 
     <v-tabs-items v-model="model">
-      <v-tab-item v-for="i in 3" :key="i" :value="`tab-${i}`">
-        <v-card flat>
-          <v-card-text v-text="text"></v-card-text>
-        </v-card>
+      <v-tab-item  :key="0" class="discover-tab" value="tab-discover">
+        <discover/>
       </v-tab-item>
     </v-tabs-items>
     </div>
@@ -40,12 +38,14 @@
 
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+// import Discover from "./components/Discover";
+import Discover from "./views/Discover";
+import keys from "./keys";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    Discover
   },
   data() {
     return {
@@ -53,6 +53,9 @@ export default {
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
+  },
+  created(){
+    console.log(keys)
   }
 };
 </script>
@@ -60,6 +63,15 @@ export default {
 .tab-body{
   height: 100%;
   display: flex;
+  justify-content: center;
+}
+.v-window{
+  width: 100%;
+}
+.discover-tab {
+  color: white;
+  width: 100%;
+  padding: 0 2rem 2rem 2rem;
 }
 </style>
 
