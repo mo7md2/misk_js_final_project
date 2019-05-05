@@ -17,20 +17,27 @@
 
       <template v-slot:extension>
         <!-- tabs names -->
-        <v-tabs v-model="model" color="transparent" centered  >
+        <v-tabs v-model="selectedTab" color="transparent" centered>
           <v-tab :key="0" href="#tab-discover">Discover</v-tab>
+          <v-tab  :key="1" href="#tab-show">Show details</v-tab>
         </v-tabs>
         <!--  -->
       </template>
     </v-toolbar>
     <!-- tabs content -->
     <div class="tab-body">
-
-    <v-tabs-items v-model="model">
-      <v-tab-item  :key="0" class="discover-tab" value="tab-discover">
-        <discover/>
-      </v-tab-item>
-    </v-tabs-items>
+      <v-tabs-items v-model="selectedTab">
+        <!-- discover page -->
+        <v-tab-item
+        
+         :key="0" class="discover-tab" value="tab-discover">
+          <discover @showClick="onShowClick"/>
+        </v-tab-item>
+        <!-- show details page -->
+        <v-tab-item  lazy :key="1" class="show-tab" value="tab-show">
+          <show :showId="showId"/>
+        </v-tab-item>
+      </v-tabs-items>
     </div>
     <!--  -->
   </v-app>
@@ -38,34 +45,39 @@
 
 
 <script>
-// import Discover from "./components/Discover";
 import Discover from "./views/Discover";
+import Show from "./views/Show";
 import keys from "./keys";
 
 export default {
   name: "App",
   components: {
-    Discover
+    Discover,
+    Show
   },
   data() {
     return {
-      model: "tab-2",
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      selectedTab: "tab-discover",
+      showId:null,
     };
   },
-  created(){
-    console.log(keys)
+  methods:{
+    onShowClick:function(showId){
+      this.showId = showId;
+      this.selectedTab="tab-show"
+    }
+  },
+  created() {
   }
 };
 </script>
 <style>
-.tab-body{
+.tab-body {
   height: 100%;
   display: flex;
   justify-content: center;
 }
-.v-window{
+.v-window {
   width: 100%;
 }
 .discover-tab {

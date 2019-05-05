@@ -21,6 +21,13 @@ class TMDB_API {
     let url = "discover/movie";
     return this.fetchAPI(url,params)
   }
+  getShow(movieId) {
+    // get show details 
+    // return promise 
+    let url = "movie/"+movieId;
+    return this.fetchAPI(url)
+  }
+
 }
 // initiate here to use one instance every where
 const tmdb = new TMDB_API(keys.tmdb_key);
