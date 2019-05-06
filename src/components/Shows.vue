@@ -5,7 +5,8 @@
           <!-- @click.native="$emit('showClick',item.id)"  -->
         <poster
         @click.native="$emit('showClick', item.id)"
-          
+          :currentUser="currentUser"
+          :userShows="userShows"
           :id="item.id"
           :name="item.title"
           :rate="item.vote_average"
@@ -27,7 +28,9 @@ import Poster from "@/components/Poster.vue";
 
 export default {
   props: {
-    shows: Array
+    shows: Array,
+    currentUser:Object,
+    userShows:Array,
   },
   components: {
     PostersGrid,

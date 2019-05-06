@@ -67,7 +67,6 @@ export default {
         .getShow(showId)
         .then(res => {
           this.mainShow = res;
-          console.log(res);
         })
         .finally(() => {
           this.loading = false;

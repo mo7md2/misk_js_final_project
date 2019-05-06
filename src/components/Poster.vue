@@ -45,14 +45,24 @@
 
     <!-- top bar -->
     <div class="poster-top-bar">
-      <v-btn @click.stop="onFavClick" small fab icon class="m-0 p-0" color="white">
-        <v-icon :color="favorite?'red':'black'">{{favorite?'favorite':'favorite_border'}}</v-icon>
+      <v-btn
+        v-if="!!currentUser"
+        @click.stop="onFavClick"
+        small
+        fab
+        icon
+        class="m-0 p-0"
+        color="white"
+      >
+        <v-icon :color="isFavorite?'red':'black'">{{isFavorite?'favorite':'favorite_border'}}</v-icon>
       </v-btn>
     </div>
   </div>
 </template>
 
 <script>
+const fb = require("@/Firebase.js");
+
 export default {
   components: {},
   props: {
@@ -62,17 +72,43 @@ export default {
     name: String,
     rate: Number,
     vote: Number,
-    date: String
+    date: String,
+    currentUser: Object,
+    userShows: Array
   },
   data() {
     return {
-      activePoster: false,
-      favorite: false
+      activePoster: false
     };
+  },
+  computed: {
+    userShow: function() {
+
+      let userShow = this.userShows.find(show => {
+        return (show.val().id == this.id && show.val().userId==this.currentUser.userId);
+      });
+      if (!userShow) return null;
+      return userShow;
+    },
+    isFavorite: function() {
+      if (!this.userShow) return false;
+      console.log(this.userShow.val())
+      return this.userShow.val().favorite;
+    }
   },
   methods: {
     onFavClick: function() {
-      this.favorite = !this.favorite;
+      if (this.userShow) {
+        this.userShow.getRef().update({
+          favorite: !this.isFavorite
+        });
+      } else {
+        fb.db
+          .ref("/shows/")
+          .push({ id: this.id, favorite: true ,userId:this.currentUser.userId})
+          .then(() => {
+          });
+      }
     },
     onMousedown: function(e) {
       this.activePoster = true;
@@ -80,8 +116,7 @@ export default {
     onMouseup: function(e) {
       this.activePoster = false;
     }
-  },
-  computed: {}
+  }
 };
 </script>
 

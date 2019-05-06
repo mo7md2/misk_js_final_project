@@ -15,6 +15,7 @@ fb.auth.onAuthStateChanged(user => {
 
             render: h => h(App)
         })
+        
     }
 })
 

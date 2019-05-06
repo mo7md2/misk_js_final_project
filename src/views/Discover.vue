@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!loading">
-      <shows @showClick="$emit('showClick', $event)" :shows="pageShows"/>
+      <shows :userShows="userShows"  :currentUser="currentUser" @showClick="$emit('showClick', $event)" :shows="pageShows"/>
       <v-pagination
         dark
         v-model="page"
@@ -28,7 +28,11 @@ import Shows from "@/components/Shows.vue";
 
 export default {
   components: {
-    Shows
+    Shows,
+  },
+  props:{
+    currentUser:Object,
+userShows:Array,
   },
   data() {
     return {
