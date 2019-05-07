@@ -17,7 +17,7 @@
             />
             <show-page-main-info :mainShow="mainShow"/>
             <v-flex xs12 px-3>
-              <show-reviews/>>
+              <show-reviews :showId="mainShow.id" :currentUser="currentUser" :userShows="userShows" />>
             </v-flex>
 
             <!-- </div> -->
@@ -51,7 +51,10 @@ export default {
     ShowPageMainInfo
   },
   props: {
-    showId: Number
+    showId: Number,
+    userShows:Array,
+        currentUser: Object,
+
   },
   data() {
     return {

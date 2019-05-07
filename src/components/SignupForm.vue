@@ -27,8 +27,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" :loading="loading" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="signup">Signup</v-btn>
+          <v-btn color="blue darken-1"  flat @click="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" :loading="loading" flat @click="signup">Signup</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -54,13 +54,14 @@ export default {
       fb.auth
         .createUserWithEmailAndPassword(this.f_email, this.f_password)
         .then(user => {
+          this.$emit("update:currentUser", user);
           // create user obj
           fb.db
             .ref("/users/" + user.user.uid)
             .set({
               userName: this.f_name
             })
-            .then(function(snapshot) {
+            .then(snapshot=> {
                     this.loading = false
 
               this.$emit("update:dialogClose", false);
@@ -69,7 +70,6 @@ export default {
         .catch(err => {
           console.log(err);
         });
-      // console.log(fb.auth.currentUser);
     }
   },
   computed: {

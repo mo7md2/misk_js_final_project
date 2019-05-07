@@ -65,7 +65,6 @@ userShows:Array,
           .discover({ page: page })
           .then(res => {
             this.shows.push(res);
-            console.log(res);
             this.totalPages = res.total_pages;
           })
           .finally(() => {

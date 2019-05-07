@@ -1,25 +1,12 @@
 <template>
   <v-card>
-    <v-card-title class="title">Lorem Ipsum Dolor</v-card-title>
+    <v-card-title class="title">Review</v-card-title>
     <v-card-text class="white review-body">
       <!-- text of review -->
-      <p
-        v-if="!edit"
-      >Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</p>
-      <!-- edit of review -->
-      <v-textarea
-        v-else
-        light
-        solo
-        name="input-7-4"
-        label="Solo textarea"
-        value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
-      ></v-textarea>
+      <p >{{showWithReview.val().review}}</p>
       <!--  -->
-      <template>
-        <v-btn :color="!edit?'black':'green'" @click="onEditClick" outline icon>
-          <v-icon>{{!edit?'edit':'done'}}</v-icon>
-        </v-btn>
+      <template v-if="userId==showWithReview.val().userId">
+
         <v-btn @click="onDeleteClick" color="red" outline icon>
           <v-icon>delete</v-icon>
         </v-btn>
@@ -31,16 +18,20 @@
 <script>
 export default {
   props: {
-    review: Object
+    showWithReview: Object,
+    userId: String
   },
   data() {
     return {
-      edit: false
     };
   },
   methods: {
-    onEditClick: function() {},
-    onDeleteClick: function() {}
+    onDeleteClick: function() {
+      
+      this.showWithReview.getRef().update({
+        review: ""
+      });
+    }
   }
 };
 </script>

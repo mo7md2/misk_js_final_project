@@ -38,7 +38,7 @@
         </v-tab-item>
         <!-- show details page -->
         <v-tab-item lazy :key="1" class="show-tab" value="tab-show">
-          <show :userShows="userShows" :showId="showId"/>
+          <show :currentUser="currentUser" :userShows="userShows" :showId="showId"/>
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -47,6 +47,7 @@
       v-if="signupDialog"
       :openDialog="signupDialog"
       @update:dialogClose="signupDialog=false"
+      @update:currentUser="onLogin"
     />
     <login-form
       v-if="loginDialog"
@@ -137,6 +138,9 @@ export default {
   computed: {
   },
   created() {
+    fb.auth.onAuthStateChanged(user => {
+      this.this.setCurrentUser(user.uid);
+})
     // get currentUser
     let uid = fb.auth.currentUser.uid;
     if (!uid) {

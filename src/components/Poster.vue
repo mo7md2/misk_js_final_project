@@ -92,7 +92,6 @@ export default {
     },
     isFavorite: function() {
       if (!this.userShow) return false;
-      console.log(this.userShow.val())
       return this.userShow.val().favorite;
     }
   },
